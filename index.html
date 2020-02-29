@@ -11,39 +11,75 @@
     <script type="text/javascript" src="./css/jscex-async-powerpack.min.js"></script>
     <script type="text/javascript" src="./css/functions.js" charset="utf-8"></script>
     <script type="text/javascript" src="./css/love.js" charset="utf-8">
-	Page({
-    data: {
-        isPlaying: false  
-    },
-  onReady:function(e){
-     this.audioCtx = wx.createAudioContext('myAudio')
-   },
-    onUnload:function(){
-       this.data.innerAudioContext.destroy();
-    },
-    audioClick(e) {
-      
-        this.setData({
-          isPlaying:!this.data.isPlaying
-        })
+	$(document).ready(function() {
 
-        if (this.data.isPlaying){
-            
-            this.audioCtx.play();
-            console.log("播放")
-        }else{
-            this.audioCtx.pause();
+        var voice = document.getElementById('voice');
+
+        voice.play();
+
+        //判断 WeixinJSBridge 是否存在，加载WeixinJSBridge需要一定的时间
+
+        if (typeof WeixinJSBridge == "object" && typeof WeixinJSBridge.invoke == "function") {
+
+            voice.play();
+
+        } else {
+
+            //WeixinJSBridge还未加载完时，兼听客户端抛出事件"WeixinJSBridgeReady"，如果抛出WeixinJSBridgeReady，说明WeixinJSBridge加载完毕
+
+           
+
+          if (document.addEventListener) {
+
+               //WeixinJSBridge加载完毕时进行播放
+
+                document.addEventListener("WeixinJSBridgeReady", function()  
+
+               {
+
+                    voice.play();
+
+                }, false);
+
+           // Internet Explorer 8 及更早IE版本不支持 addEventListener() 方法时用document.attachEvent
+
+            } else if (document.attachEvent) {
+
+                document.attachEvent("WeixinJSBridgeReady", function() {
+
+                    voice.play();
+
+                });
+
+                document.attachEvent("onWeixinJSBridgeReady", function() {
+
+                    voice.play();
+
+                });
+
+            }
+
         }
-  }
-})
-	
-	</script>
+		 var voiceStatus = true;
+
+        document.addEventListener("touchstart", function(e) {
+
+            if (voiceStatus) {
+
+                voice.play();
+
+                voiceStatus = false;
+
+            }
+
+        }, false);
+
+});</script>
+
 </head>
 
-
-
     <body>
-      <audio autoplay="autopaly"  id="myAudio" bindtap='audioClick'  controls loop >
+      <audio id="voice" autoplay="autoplay">
           <source src="music/love.mp3" type="audio/mp3" />
       </audio>  
         <div id="main">
