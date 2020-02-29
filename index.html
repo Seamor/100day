@@ -10,15 +10,40 @@
     <script type="text/javascript" src="./css/jscex-async.min.js"></script>
     <script type="text/javascript" src="./css/jscex-async-powerpack.min.js"></script>
     <script type="text/javascript" src="./css/functions.js" charset="utf-8"></script>
-    <script type="text/javascript" src="./css/love.js" charset="utf-8"></script>
-      <style type="text/css">
-<!--
-.STYLE1 {color: #666666}
--->
-        </style>
+    <script type="text/javascript" src="./css/love.js" charset="utf-8">
+	Page({
+    data: {
+        isPlaying: false  
+    },
+  onReady:function(e){
+     this.audioCtx = wx.createAudioContext('myAudio')
+   },
+    onUnload:function(){
+       this.data.innerAudioContext.destroy();
+    },
+    audioClick(e) {
+      
+        this.setData({
+          isPlaying:!this.data.isPlaying
+        })
+
+        if (this.data.isPlaying){
+            
+            this.audioCtx.play();
+            console.log("播放")
+        }else{
+            this.audioCtx.pause();
+        }
+  }
+})
+	
+	</script>
 </head>
+
+
+
     <body>
-      <audio autoplay="autopaly">
+      <audio autoplay="autopaly"  id="myAudio" bindtap='audioClick'  controls loop >
           <source src="music/love.mp3" type="audio/mp3" />
       </audio>  
         <div id="main">
@@ -26,7 +51,7 @@
                 <div id="text">
               <div id="code">
             <font color="#FF0000">    
-<span class="say"><h1>我希望有个如你一般的人</h1></span><br><br>
+<span class="say"><h2>我希望有个如你一般的人</h2></span><br><br>
 <span class="say">我希望有个如你一般的人，</span><br> <br>    
 <span class="say">如这山间清晨一般明亮清爽，</span><br><br>
 <span class="say">如奔赴古城道路上阳光一般的人，</span><br><br>
@@ -34,7 +59,7 @@
 <span class="say">由起点到夜晚，由山野到书房，一切问题的答案都很简单。</span><br><br>
 <span class="say">我希望有个如你一般的人，贯彻未来，数遍生命的公路牌。</span><br><br>
 <span class="say"><span class="space"></span>  刘源❤李雨霄</span><br>
-
+<span class="say"><h1>宝贝，100天纪念日快乐!</h1></span><br>
         </font>
       </div>
                 </div>
