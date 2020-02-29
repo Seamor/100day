@@ -10,12 +10,25 @@
     <script type="text/javascript" src="./css/jscex-async.min.js"></script>
     <script type="text/javascript" src="./css/jscex-async-powerpack.min.js"></script>
     <script type="text/javascript" src="./css/functions.js" charset="utf-8"></script>
-    <script type="text/javascript" src="./css/love.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./css/love.js" charset="utf-8">
+    function autoPlayAudio2() {
+        window.onload = function() {
+            // alert(typeof WeixinJSBridge);
+            WeixinJSBridge.invoke('getNetworkType', {}, function(e) {
+                // 在这里拿到 e.err_msg, 这里面就包含了所有的网络类型
+                // alert(e.err_msg);
+                document.getElementById('bgmusic').play();
+            });
+        };
+    }
+    autoPlayAudio2();
+    
+    </script>
 
 </head>
 
     <body>
-      <audio id="bg-music" autoplay="autoplay">
+      <audio id="bgmusic" autoplay="autoplay">
           <source src="music/love.mp3" type="audio/mp3" />
       </audio>  
         <div id="main">
